@@ -1,0 +1,10 @@
+/* style/index.css */
+
+/* 1. Theme (변수) */
+@import './theme.css';
+
+/* 2. Animations */
+@import './animations.css';
+
+/* 3. Intro */
+@import '../components/Intro/intro.css';

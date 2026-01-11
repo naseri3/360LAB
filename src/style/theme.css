@@ -1,0 +1,40 @@
+:root {
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+  
+      /* Background */
+      --color-bg-main: #242728;
+      --color-bg-sub: #162D52;
+    
+      /* Primary Neon */
+      --color-primary: #1EA7FF; 
+    
+      /* Accent Neon */
+      --color-accent: #4FFFE3;
+    
+      /* Text */
+      --color-text-main: #EAEFF5; 
+      --color-text-muted: rgba(234, 239, 245, 0.6);
+    
+      /* System / State */
+      --color-success: #4FFFE3;
+      --color-warning: #FFC857;
+      --color-error: #FF4D4D;
+    
+      /* Shadow & Glow */
+      --glow-primary: 0 0 8px rgba(30, 167, 255, 0.6),
+                      0 0 16px rgba(30, 167, 255, 0.4);
+    
+      --glow-accent: 0 0 6px rgba(79, 255, 227, 0.7),
+                     0 0 14px rgba(79, 255, 227, 0.5);
+  }
+
+  body {
+    margin: 0;
+    display: flex;
+    place-items: center;
+    min-width: 320px;
+    min-height: 100vh;
+    background-color: var(--color-bg-main);
+  }
