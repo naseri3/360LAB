@@ -5,12 +5,21 @@
     text-align: center;
 }
 #intro {
-    font-size: 70px;
+    width: 100%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    font-size: 100px;
     font-weight: 700;
     color: var(--color-primary);
     text-shadow: var(--glow-primary);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-}
+    text-align: center;
+    white-space: pre-line;
+    transition:
+      opacity 0.4s ease,
+      transform 0.4s ease;
+    will-change: transform, opacity;
+  }  
 .intro--off {
     opacity: 0;
     transform: scale(1.2);
