@@ -1,42 +1,62 @@
-import { useState } from 'react';
-import CharacterCard from './CharacterCard';
-import './characterSelect.css';
+import { useEffect, useRef, useState } from "react";
+import CharacterCard from "./CharacterCard";
+import "./characterSelect.css";
 
 const characters = [
-   { id: 1, name: 'NEON', role: 'SYSTEM CORE' },
-   { id: 2, name: 'PHANTOM', role: 'STEALTH' },
-   { id: 3, name: 'SOLAR', role: 'ENERGY' },
-   { id: 4, name: 'NOVA', role: 'CONTROL' },
-   { id: 5, name: 'VOID', role: 'CHAOS' },
+  { id: 1, name: "NEON", role: "SYSTEM CORE" },
+  { id: 2, name: "PHANTOM", role: "STEALTH" },
+  { id: 3, name: "SOLAR", role: "ENERGY" },
+  { id: 4, name: "NOVA", role: "CONTROL" },
+  { id: 5, name: "VOID", role: "CHAOS" },
 ];
 
-function CharacterSelect() {
-   const [hovered, setHovered] = useState(null);
-   const [selected, setSelected] = useState(null);
+export default function CharacterSelect() {
+  const [visible, setVisible] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+  const sectionRef = useRef(null);
 
-   return (
-      <section className="character-select">
-         <h2 className="character-title">CHARACTER SELECT</h2>
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
 
-         <div className="character-fan">
-            <div className="character-fan__inner">
-               {characters.map((c, index) => (
-                  <CharacterCard
-                     key={c.id}
-                     character={c}
-                     index={index}
-                     isHovered={hovered === index}
-                     isSelected={selected === index}
-                     isDimmed={selected !== null && selected !== index}
-                     onHover={() => setHovered(index)}
-                     onLeave={() => setHovered(null)}
-                     onSelect={() => setSelected(index)}
-                  />
-               ))}
-            </div>
-         </div>
-      </section>
-   );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section
+      ref={sectionRef}
+      className={`character-select ${visible ? "show" : ""}`}
+    >
+      <h2 className="character-title">CHARACTER SELECT</h2>
+
+      {/* 🔥 배경 클릭 시 선택 해제 */}
+      <div
+        className="character-stage"
+        onClick={() => setSelectedId(null)}
+      >
+        <div className="character-fan">
+          {characters.map((c) => (
+            <CharacterCard
+              key={c.id}
+              character={c}
+              isSelected={selectedId === c.id}
+              onClick={() =>
+                setSelectedId((prev) =>
+                  prev === c.id ? null : c.id
+                )
+              }
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
-
-export default CharacterSelect;

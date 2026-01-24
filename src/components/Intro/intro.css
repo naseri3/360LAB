@@ -1,109 +1,77 @@
-/* =========================
-   Intro Base
-========================= */
-#intro {
+/* 전체 배경 */
+.intro-wrap {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  pointer-events: none;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
   z-index: 100;
   will-change: transform, opacity;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* =========================
-   Neon Typography
-========================= */
-.intro-neon {
-  font-size: 56px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  color: var(--color-primary); /* ⭐ Primary Neon */
+/* 공통 타이틀 */
+.intro-title {
+  font-weight: 800;
+  text-align: center;
+  margin: 0;
+  user-select: none;
 }
 
-/* 한 줄 네온 */
-.neon-line {
-  display: inline-block;
+/* SYSTEM BOOTING */
+.intro-title--primary {
+  font-size: 80px;
+  color: var(--color-white);
 
-  /* 기본 발광 */
   text-shadow:
-    var(--glow-primary),
-    var(--glow-accent);
+    0 0 6px rgba(242, 255, 210, 0.8),
+    0 0 18px rgba(242, 255, 210, 0.6),
+    0 0 40px rgba(242, 255, 210, 0.35);
 
-  animation:
-    neon-flicker 3.2s infinite,
-    neon-pulse 4.5s ease-in-out infinite;
+  animation: soft-pulse 3.5s ease-in-out infinite;
 }
 
-/* 두 번째 줄 살짝 지연 */
-.neon-delay {
-  animation-delay: 0.4s, 0.4s;
+/* 360LAB INITIALIZED */
+.intro-title--accent {
+  font-size: 80px;
+  color:var(--color-white);
+
+  text-shadow:
+    0 0 6px rgba(185, 255, 242, 0.75),
+    0 0 18px rgba(185, 255, 242, 0.55),
+    0 0 36px rgba(185, 255, 242, 0.35);
+
+  animation: soft-pulse 3.5s ease-in-out infinite;
+  animation-delay: 0.4s;
 }
 
-/* =========================
-   Flicker (불안정 네온)
-========================= */
-@keyframes neon-flicker {
-  0% {
-    opacity: 1;
-    text-shadow:
-      var(--color-white),
-      var(--glow-accent);
-  }
-
-  6% { opacity: 0.85; }
-
-  8% {
-    opacity: 0.3;
-    text-shadow: none;
-  }
-
-  10% {
-    opacity: 1;
-    text-shadow:
-      var(--color-white),
-      var(--glow-accent);
-  }
-
-  72% { opacity: 0.9; }
-  74% { opacity: 0.5; }
-  76% { opacity: 1; }
-}
-
-/* =========================
-   Pulse (숨쉬는 발광)
-========================= */
-@keyframes neon-pulse {
+/* 아주 은은한 네온 호흡 */
+@keyframes soft-pulse {
   0%, 100% {
-    text-shadow:
-      var(--color-white),
-      var(--glow-accent);
+    opacity: 1;
+    filter: blur(0);
   }
-
   50% {
-    text-shadow:
-      0 0 2px rgba(255, 214, 102, 1),
-  
-      0 0 8px rgba(255, 214, 102, 0.9),
-      0 0 16px rgba(255, 214, 102, 0.7),
-  
-      0 0 32px rgba(255, 200, 80, 0.45),
-      0 0 64px rgba(255, 200, 80, 0.25);
-  }  
+    opacity: 0.92;
+    filter: blur(0.4px);
+  }
+}
+/* 네온 깜빡임 (무한) */
+@keyframes neon-flicker {
+  0%   { opacity: 0; }
+  3%   { opacity: 0.5; }
+  6%   { opacity: 1; }
+  9%   { opacity: 0.4; }
+  12%  { opacity: 1; }
+  100% { opacity: 1; }
 }
 
-/* =========================
-   Scroll End (전원 OFF)
-========================= */
-.intro--off .neon-line {
-  animation: none;
+/* 네온 숨쉬기 + 깜빡임 동시에 */
+.neon-sign {
+  animation:
+    soft-pulse 1.5s ease-in-out infinite,
+    neon-flicker 3.8s infinite;
 }
 
-.intro--off {
-  opacity: 0;
-  filter: blur(10px);
-  transition:
-    opacity 0.8s ease,
-    filter 0.8s ease;
-}
