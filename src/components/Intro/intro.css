@@ -5,23 +5,20 @@
     text-align: center;
 }
 #intro {
-    width: 100%;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    font-size: 100px;
-    font-weight: 700;
-    color: var(--color-primary);
-    text-shadow: var(--glow-primary);
-    text-align: center;
-    white-space: pre-line;
-    transition:
-      opacity 0.4s ease,
-      transform 0.4s ease;
-    will-change: transform, opacity;
-  }  
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 80px;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-shadow: var(--glow-primary);
+  text-align: center;
+  pointer-events: none;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  z-index: 10;
+}
+ 
 .intro--off {
-    opacity: 0;
-    transform: scale(1.2);
-    pointer-events: none;
+  opacity: 0;
 }
