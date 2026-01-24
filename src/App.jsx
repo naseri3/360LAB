@@ -4,13 +4,10 @@ import CharacterSelect from "./components/CharacterCard/CharacterSelect";
 function App() {
   return (
     <>
-      {/* 인트로는 항상 렌더 (fixed overlay) */}
       <Intro />
-
-      {/* 실제 페이지 콘텐츠 */}
-      <main>
-        <CharacterSelect />
-      </main>
+      {/* 인트로 아래로 내려가기 위한 스크롤 공간 */}
+      <div style={{ height: "140vh" }} />
+      <CharacterSelect />
     </>
   );
 }

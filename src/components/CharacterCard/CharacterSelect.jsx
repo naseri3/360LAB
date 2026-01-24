@@ -1,40 +1,42 @@
-import { useMemo } from "react";
-import CharacterCard from "./CharacterCard";
-import "./characterSelect.css";
+import { useState } from 'react';
+import CharacterCard from './CharacterCard';
+import './characterSelect.css';
+
+const characters = [
+   { id: 1, name: 'NEON', role: 'SYSTEM CORE' },
+   { id: 2, name: 'PHANTOM', role: 'STEALTH' },
+   { id: 3, name: 'SOLAR', role: 'ENERGY' },
+   { id: 4, name: 'NOVA', role: 'CONTROL' },
+   { id: 5, name: 'VOID', role: 'CHAOS' },
+];
 
 function CharacterSelect() {
-  const characters = useMemo(
-    () => [
-      { id: "c1", name: "NEON", role: "SYSTEM CORE" },
-      { id: "c2", name: "PHANTOM", role: "STEALTH" },
-      { id: "c3", name: "SOLAR", role: "ENERGY" },
-      { id: "c4", name: "NOVA", role: "CONTROL" },
-      { id: "c5", name: "VOID", role: "CHAOS" },
-    ],
-    []
-  );
+   const [hovered, setHovered] = useState(null);
+   const [selected, setSelected] = useState(null);
 
-  const center = (characters.length - 1) / 2;
+   return (
+      <section className="character-select">
+         <h2 className="character-title">CHARACTER SELECT</h2>
 
-  return (
-    <section className="character-select">
-      <h1>CHARACTER SELECT</h1>
-
-      <div className="character-select__fan">
-        {characters.map((character, index) => {
-          const offset = index - center;
-
-          return (
-            <CharacterCard
-              key={character.id}
-              character={character}
-              offset={offset}
-            />
-          );
-        })}
-      </div>
-    </section>
-  );
+         <div className="character-fan">
+            <div className="character-fan__inner">
+               {characters.map((c, index) => (
+                  <CharacterCard
+                     key={c.id}
+                     character={c}
+                     index={index}
+                     isHovered={hovered === index}
+                     isSelected={selected === index}
+                     isDimmed={selected !== null && selected !== index}
+                     onHover={() => setHovered(index)}
+                     onLeave={() => setHovered(null)}
+                     onSelect={() => setSelected(index)}
+                  />
+               ))}
+            </div>
+         </div>
+      </section>
+   );
 }
 
 export default CharacterSelect;
