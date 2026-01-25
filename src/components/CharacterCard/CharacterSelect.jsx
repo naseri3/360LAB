@@ -8,6 +8,8 @@ const characters = [
   { id: 3, name: "SOLAR", role: "ENERGY" },
   { id: 4, name: "NOVA", role: "CONTROL" },
   { id: 5, name: "VOID", role: "CHAOS" },
+  { id: 6, name: "VOID", role: "CHAOS" },
+  // 👉 6, 7, 10개로 늘려도 자동
 ];
 
 export default function CharacterSelect() {
@@ -43,10 +45,12 @@ export default function CharacterSelect() {
         onClick={() => setSelectedId(null)}
       >
         <div className="character-fan">
-          {characters.map((c) => (
+          {characters.map((c, i) => (
             <CharacterCard
               key={c.id}
               character={c}
+              index={i}
+              totalCount={characters.length}
               isSelected={selectedId === c.id}
               onClick={() =>
                 setSelectedId((prev) =>

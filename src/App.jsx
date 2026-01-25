@@ -25,7 +25,7 @@ function App() {
       <Intro isVisible={showIntro} />
 
       {/* 스크롤 영역 */}
-      <div style={{ height: "200vh" }} />
+      <div style={{ height: "110vh" }} />
 
       {/* Character Select는 항상 존재 */}
       <CharacterSelect />
