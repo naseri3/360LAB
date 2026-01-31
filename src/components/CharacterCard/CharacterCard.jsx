@@ -4,29 +4,31 @@ export default function CharacterCard({
   totalCount,
   isSelected,
   onClick,
+  style = {},
 }) {
+  const spreadX = 95;
+  const spreadRot = 12;
+  const spreadY = 30;
+
   const center = (totalCount - 1) / 2;
   const offset = index - center;
   const abs = Math.abs(offset);
 
-  /* 🔧 여기 숫자만 바꾸면 전체 연출 변경 */
-  const spreadX = 95;    // 좌우 간격
-  const spreadRot = 12;  // 회전 각도
-  const spreadY = 30;    // 깊이감(Y)
+  const baseZIndex = character.id * 10;
 
-  const style = {
+  const computedStyle = {
     "--x": `${offset * spreadX}px`,
     "--rotate": `${offset * spreadRot}deg`,
     "--baseY": `${abs * spreadY}px`,
-    zIndex: isSelected ? 20 : 10 - abs,
+    zIndex: isSelected ? 1000 : baseZIndex,
   };
 
   return (
     <div
       className={`character-card ${isSelected ? "selected" : ""}`}
-      style={style}
+      style={{ ...computedStyle, ...style }}
       onClick={(e) => {
-        e.stopPropagation(); // 🔥 배경 클릭 방지
+        e.stopPropagation();
         onClick();
       }}
     >

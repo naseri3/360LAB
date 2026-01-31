@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
 import Intro from "./components/Intro/Intro";
 import CharacterSelect from "./components/CharacterCard/CharacterSelect";
+import CharacterProfile from "./components/CharacterProfile/CharacterProfile";
 
 function App() {
   const [showIntro, setShowIntro] = useState(true);
+  const [selectedCharacterId, setSelectedCharacterId] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      // 이 값은 연출에 따라 조절 가능
-      if (window.scrollY < 150) {
-        setShowIntro(true);
-      } else {
-        setShowIntro(false);
-      }
+      setShowIntro(window.scrollY < 150);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -24,11 +21,20 @@ function App() {
       {/* Intro는 항상 존재 */}
       <Intro isVisible={showIntro} />
 
-      {/* 스크롤 영역 */}
+      {/* Intro용 스크롤 영역 */}
       <div style={{ height: "110vh" }} />
 
-      {/* Character Select는 항상 존재 */}
-      <CharacterSelect />
+      {/* 👇 여기서 화면 분기 */}
+      {selectedCharacterId === null ? (
+        <CharacterSelect
+          onEnterCharacter={(id) => setSelectedCharacterId(id)}
+        />
+      ) : (
+        <CharacterProfile
+          characterId={selectedCharacterId}
+          onBack={() => setSelectedCharacterId(null)}
+        />
+      )}
     </>
   );
 }

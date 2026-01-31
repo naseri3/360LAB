@@ -15,7 +15,17 @@
   position: relative;
   z-index: 200;
 }
-
+/* =========================
+   Focus Layer (중앙 카드)
+========================= */
+.character-focus {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  pointer-events: auto;
+}
 .character-select.show {
   opacity: 1;
   transform: translateY(0);
@@ -60,7 +70,7 @@
   text-align: center;
   color: #fff;
   padding-top: 90px;
-
+  z-index: 1;
   transform-origin: bottom center;
 
   /* 🔑 JS에서 주입되는 변수 */
@@ -85,7 +95,6 @@
 .character-card:hover {
   --hoverY: -35px;
   --scale: 1.05;
-  z-index: 10;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.55);
 }
 
@@ -95,7 +104,6 @@
 .character-card.selected {
   --hoverY: -60px;
   --scale: 1.25;
-  z-index: 20;
   box-shadow: 0 40px 80px rgba(0, 0, 0, 0.75);
 }
 

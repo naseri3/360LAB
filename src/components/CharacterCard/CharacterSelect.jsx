@@ -9,10 +9,9 @@ const characters = [
   { id: 4, name: "NOVA", role: "CONTROL" },
   { id: 5, name: "VOID", role: "CHAOS" },
   { id: 6, name: "VOID", role: "CHAOS" },
-  // 👉 6, 7, 10개로 늘려도 자동
 ];
 
-export default function CharacterSelect() {
+export default function CharacterSelect({ onEnterCharacter }) {
   const [visible, setVisible] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const sectionRef = useRef(null);
@@ -39,26 +38,44 @@ export default function CharacterSelect() {
     >
       <h2 className="character-title">CHARACTER SELECT</h2>
 
-      {/* 🔥 배경 클릭 시 선택 해제 */}
+      {/* 배경 클릭 → 선택 해제 */}
       <div
         className="character-stage"
         onClick={() => setSelectedId(null)}
       >
         <div className="character-fan">
-          {characters.map((c, i) => (
-            <CharacterCard
-              key={c.id}
-              character={c}
-              index={i}
-              totalCount={characters.length}
-              isSelected={selectedId === c.id}
-              onClick={() =>
-                setSelectedId((prev) =>
-                  prev === c.id ? null : c.id
-                )
-              }
-            />
-          ))}
+          {characters.map((c, i) => {
+            const isSelected = selectedId === c.id;
+
+            return (
+              <CharacterCard
+                key={c.id}
+                character={c}
+                index={i}
+                totalCount={characters.length}
+                isSelected={isSelected}
+                onClick={() => {
+                  // 🔥 이미 선택된 카드 → 프로필 진입
+                  if (isSelected) {
+                    onEnterCharacter(c.id);
+                    return;
+                  }
+
+                  // 🔥 선택 안 된 카드 → 선택만
+                  setSelectedId(c.id);
+                }}
+                style={
+                  isSelected
+                    ? {
+                        "--x": "0px",
+                        "--rotate": "0deg",
+                        "--baseY": "0px",
+                      }
+                    : {}
+                }
+              />
+            );
+          })}
         </div>
       </div>
     </section>
