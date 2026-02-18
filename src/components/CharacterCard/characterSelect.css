@@ -15,6 +15,7 @@
   position: relative;
   z-index: 200;
 }
+
 /* =========================
    Focus Layer (중앙 카드)
 ========================= */
@@ -26,6 +27,7 @@
   z-index: 999;
   pointer-events: auto;
 }
+
 .character-select.show {
   opacity: 1;
   transform: translateY(0);
@@ -62,18 +64,22 @@
   position: absolute;
   bottom: 0;
   left: 50%;
-  width: 200px;
-  height: 250px;
-  background: rgba(255, 255, 255, 0.14);
+  width: 250px;
+  height: 350px;
+
   border-radius: 18px;
+  overflow: hidden;
+
+  /* 🔥 background 설정 */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* glass 느낌 */
   backdrop-filter: blur(8px);
-  text-align: center;
-  color: #fff;
-  padding-top: 90px;
-  z-index: 1;
+
   transform-origin: bottom center;
 
-  /* 🔑 JS에서 주입되는 변수 */
   --x: 0px;
   --rotate: 0deg;
   --baseY: 0px;
@@ -86,8 +92,12 @@
     translateY(calc(var(--baseY) + var(--hoverY)))
     scale(var(--scale));
 
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
 }
+
+
 
 /* =========================
    Hover Effect
@@ -111,12 +121,41 @@
    Text
 ========================= */
 .character-name {
-  font-size: 20px;
+  font-size: 30px;
   letter-spacing: 2px;
-  margin-bottom: 6px;
+  margin-bottom: 0px;
 }
 
 .character-role {
-  font-size: 13px;
+  font-size: 16px;
   opacity: 0.75;
+}
+
+.character-card__info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 14px;
+
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.4),
+    transparent
+  );
+  color: #fff;
+}
+.character-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.25),
+    transparent 40%
+  );
+
+  pointer-events: none;
 }

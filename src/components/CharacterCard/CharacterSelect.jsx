@@ -1,15 +1,50 @@
 import { useEffect, useRef, useState } from "react";
 import CharacterCard from "./CharacterCard";
 import "./characterSelect.css";
+// images
+import sophia from "../../assets/images/sophia_01.jpg";
+import aespa from "../../assets/images/aespa_main_02.jpg";
+import vnu from "../../assets/images/vnu-main.jpg";
 
 const characters = [
-  { id: 1, name: "NEON", role: "SYSTEM CORE" },
-  { id: 2, name: "PHANTOM", role: "STEALTH" },
-  { id: 3, name: "SOLAR", role: "ENERGY" },
-  { id: 4, name: "NOVA", role: "CONTROL" },
-  { id: 5, name: "VOID", role: "CHAOS" },
-  { id: 6, name: "VOID", role: "CHAOS" },
+  {
+    id: 1,
+    name: "SOPHIA",
+    role: "SYSTEM CORE",
+    image: sophia,
+  },
+  {
+    id: 2,
+    name: "AESPA",
+    role: "STEALTH",
+    image: aespa,
+  },
+  {
+    id: 3,
+    name: "V&N",
+    role: "ENERGY",
+    image: vnu,
+  },
+  // {
+  //   id: 4,
+  //   name: "NOVA",
+  //   role: "CONTROL",
+  //   image: "/assets/characters/nova.png",
+  // },
+  // {
+  //   id: 5,
+  //   name: "VOID",
+  //   role: "CHAOS",
+  //   image: "/assets/characters/void.png",
+  // },
+  // {
+  //   id: 6,
+  //   name: "VOID",
+  //   role: "CHAOS",
+  //   image: "/assets/characters/void.png",
+  // },
 ];
+
 
 export default function CharacterSelect({ onEnterCharacter }) {
   const [visible, setVisible] = useState(false);
@@ -34,7 +69,7 @@ export default function CharacterSelect({ onEnterCharacter }) {
   return (
     <section
       ref={sectionRef}
-      className={`character-select ${visible ? "show" : ""}`}
+      className={`character-select ${visible ? "show" : ""}`} onClick={() => setSelectedId(null)}
     >
       <h2 className="character-title">CHARACTER SELECT</h2>
 

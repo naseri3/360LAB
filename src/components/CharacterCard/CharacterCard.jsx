@@ -21,6 +21,9 @@ export default function CharacterCard({
     "--rotate": `${offset * spreadRot}deg`,
     "--baseY": `${abs * spreadY}px`,
     zIndex: isSelected ? 1000 : baseZIndex,
+
+    /* 🔥 background 주입 */
+    backgroundImage: `url(${character.image})`,
   };
 
   return (
@@ -32,8 +35,15 @@ export default function CharacterCard({
         onClick();
       }}
     >
-      <h3 className="character-name">{character.name}</h3>
-      <p className="character-role">{character.role}</p>
+      {/* 텍스트 overlay */}
+      <div className="character-card__info">
+        <h3 className="character-name">
+          {character.name}
+        </h3>
+        <p className="character-role">
+          {character.role}
+        </p>
+      </div>
     </div>
   );
 }
