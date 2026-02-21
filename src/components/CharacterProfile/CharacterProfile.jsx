@@ -1,34 +1,109 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useState, useMemo } from "react";
+import { characterGroups } from "../../data/characters";
+import CharacterViewer from "./CharacterViewer";
+import CharacterStage from "./CharacterStage";
+import InfoButtons from "./InfoButtons";
+import InfoModal from "./InfoModal";
+import "./characterProfile.css";
 
-const characters = [
-  { id: 1, name: "NEON", role: "SYSTEM CORE" },
-  { id: 2, name: "PHANTOM", role: "STEALTH" },
-  { id: 3, name: "SOLAR", role: "ENERGY" },
-  { id: 4, name: "NOVA", role: "CONTROL" },
-  { id: 5, name: "VOID", role: "CHAOS" },
-  { id: 6, name: "VOID", role: "CHAOS" },
-];
+export default function CharacterProfile({ characterId, onBack }) {
 
-export default function CharacterProfile() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-
-  const character = characters.find(
-    (c) => c.id === Number(id)
+  // 1️⃣ 그룹 찾기
+  const group = useMemo(
+    () => characterGroups.find(g => g.id === characterId),
+    [characterId]
   );
 
-  if (!character) {
-    return <div>Character not found</div>;
+  // 2️⃣ Hook은 항상 위에 선언
+  const [currentMemberId, setCurrentMemberId] = useState(null);
+  const [modalType, setModalType] = useState(null);
+
+  // 3️⃣ group 변경될 때 첫 멤버 설정
+  if (group && !currentMemberId) {
+    setCurrentMemberId(group.members[0].id);
   }
 
+  // 4️⃣ group 없으면 렌더만 막음 (Hook 이후!)
+  if (!group) {
+    return (
+      <div style={{ color: "white", padding: "50px" }}>
+        Group Not Found
+      </div>
+    );
+  }
+
+  const currentMember = group.members.find(
+    m => m.id === currentMemberId
+  );
+
+  const handlePrev = () => {
+    const index = group.members.findIndex(
+      m => m.id === currentMemberId
+    );
+
+    const newIndex =
+      index === 0 ? group.members.length - 1 : index - 1;
+
+    setCurrentMemberId(group.members[newIndex].id);
+  };
+
+  const handleNext = () => {
+    const index = group.members.findIndex(
+      m => m.id === currentMemberId
+    );
+
+    const newIndex =
+      index === group.members.length - 1 ? 0 : index + 1;
+
+    setCurrentMemberId(group.members[newIndex].id);
+  };
+
   return (
-    <section className="character-profile">
-      <button onClick={() => navigate(-1)}>← Back</button>
+    <div className="profile-container">
 
-      <h1>{character.name}</h1>
-      <p>{character.role}</p>
+      <button className="back-btn" onClick={onBack}>
+        ←
+      </button>
 
-      {/* 나중에 여기 스탯 / 설명 / 이미지 */}
-    </section>
+      <div className="profile-main">
+        <button className="arrow left" onClick={handlePrev}>
+          {"<"}
+        </button>
+
+        {currentMember && (
+          <CharacterStage>
+            <CharacterViewer images={currentMember.images} />
+          </CharacterStage>
+        )}
+
+        <button className="arrow right" onClick={handleNext}>
+          {">"}
+        </button>
+      </div>
+
+      <div className="selector">
+        {group.members.map(member => (
+          <button
+            key={member.id}
+            className={`selector-btn ${
+              currentMemberId === member.id ? "active" : ""
+            }`}
+            onClick={() => setCurrentMemberId(member.id)}
+          >
+            {member.name}
+          </button>
+        ))}
+      </div>
+
+      <InfoButtons onOpen={setModalType} />
+
+      {modalType && currentMember && (
+        <InfoModal
+          type={modalType}
+          character={currentMember}
+          onClose={() => setModalType(null)}
+        />
+      )}
+    </div>
   );
 }

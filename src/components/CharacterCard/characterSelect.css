@@ -37,7 +37,27 @@
   color: #fff;
   font-size: 50px;
   margin-bottom: 120px;
-  transform: translateY(-60px);
+  opacity: 0;
+  transform: translateX(-150px) scale(0.9);
+  transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 등장 */
+.character-select.show .character-title {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+/* 아래로 스크롤하다가 사라질 때 (위로 이동) */
+.character-select.hide.down .character-title {
+  opacity: 0;
+  transform: translateX(-150px) scale(0.9);
+}
+
+/* 위로 스크롤하다가 사라질 때 → 오른쪽으로 퇴장 */
+.character-select.hide.up .character-title {
+  opacity: 0;
+  transform: translateX(150px) scale(0.9);
 }
 
 /* =========================
